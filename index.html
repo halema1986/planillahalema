@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1B3B6F">
-  <meta name="description" content="Calculadora Halema con instrucciones claras: sueldo básico, asignación familiar, beneficios y costo mensual estimado para la empresa. Adaptada a celular y computadora.">
+  <meta name="description" content="Calculadora Halema: compara al mismo tiempo el costo laboral con y sin asignación familiar. Incluye porcentajes, beneficios y resultados para celular y computadora.">
   <title>Calculadora de costo laboral | Halema</title>
 
   <!-- Tailwind CSS vía CDN, según lo solicitado. El CSS de respaldo conserva
@@ -21,7 +21,7 @@
     body { margin: 0; background: var(--paper); color: var(--ink); font-family: Inter, "Segoe UI", Arial, sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     h1, h2, h3, p { margin: 0; }
     button, input { font: inherit; }
-    button, summary, label[for="family"] { -webkit-tap-highlight-color: transparent; }
+    button, summary { -webkit-tap-highlight-color: transparent; }
     button { cursor: pointer; }
     button:disabled { cursor: not-allowed; opacity: .5; }
     button, input, summary, a { outline-offset: 4px; }
@@ -67,13 +67,11 @@
     .help-text strong { color: var(--ink); font-weight: 600; }
     .error { margin-top: 9px; color: #A4231D; font-size: 15px; font-weight: 600; }
     .example-button { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin-top: 5px; padding: 5px 0; border: 0; background: transparent; color: var(--navy); font-size: 14px; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
-    .family-option { display: flex; gap: 12px; align-items: flex-start; margin-top: 17px; padding: 16px; border: 1px solid var(--line); border-radius: 11px; cursor: pointer; }
-    .family-option:has(input:checked) { border-color: #C69A40; background: #FFFBF1; }
-    #family { width: 23px; height: 23px; min-width: 23px; margin: 1px 0 0; accent-color: var(--navy); cursor: pointer; }
-    .family-copy { flex: 1; min-width: 0; }
-    .family-title { display: block; font-weight: 650; color: var(--ink); }
-    .family-detail { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
-    .family-amount { display: inline-block; margin-top: 8px; font-weight: 700; font-size: 16px; color: var(--navy); }
+
+
+
+
+
     .base-summary { margin-top: 20px; padding: 15px 0; border-block: 1px solid var(--line); }
     .summary-line { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--navy); font-size: 14px; }
     .summary-line span { max-width: 170px; }
@@ -110,6 +108,8 @@
     .pay-note svg { margin-top: 3px; color: #846422; }
     .pay-note strong { display: block; color: #4C3C1E; font-weight: 700; }
     .pay-note p { margin-top: 4px; }
+    .scope-note { margin-top: 14px; padding: 17px 19px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 11px; background: white; color: var(--muted); font-size: 15px; }
+    .scope-note h3 { margin-bottom: 6px; color: var(--navy); font-size: 16px; font-weight: 700; }
     .planning { margin-top: 24px; padding: 25px; }
     .planning-intro { margin-top: 8px; max-width: 850px; color: var(--muted); font-size: 15px; }
     .planning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 19px; }
@@ -252,14 +252,13 @@
       .brand img { width: 140px; }
       main { padding-block: 18px 0; }
       h1 { font-size: 25px; }
-      .intro, .section-description, .total-explanation, .pay-note, .planning-intro { font-size: 11px; }
+      .intro, .section-description, .total-explanation, .pay-note, .scope-note, .planning-intro { font-size: 11px; }
+      .scope-note h3 { font-size: 12px; }
       .workspace { grid-template-columns: 42% minmax(0, 1fr); gap: 18px; }
       .input-panel, .total-card { padding: 18px; }
       .field-label { margin-top: 16px; font-size: 12px; }
       #salary { font-size: 22px; height: 47px; }
-      .family-title, .family-detail, .help-text, .family-amount, .summary-line, .metric-label { font-size: 11px; }
-      .family-option { margin-top: 14px; padding: 10px; }
-      #family { width: 17px; height: 17px; min-width: 17px; }
+
       .primary-button, .auto-note, .button-quiet, .example-button, .left-note, .skip-link, .mobile-dock { display: none !important; }
       .total-card h2 { font-size: 19px; }
       .total-amount { font-size: 32px; }
@@ -268,7 +267,7 @@
       .metric { display: flex; justify-content: space-between; gap: 10px; }
       .metric + .metric { padding: 0; border: 0; }
       .metric-value { font-size: 18px; }
-      .panel, .total-card, .pay-note, tr { box-shadow: none; break-inside: avoid; }
+      .panel, .total-card, .pay-note, .scope-note, tr { box-shadow: none; break-inside: avoid; }
       .planning { padding: 18px; margin-top: 18px; }
       .planning-grid { grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 12px; }
       .planning-card { padding: 13px; }
@@ -280,6 +279,171 @@
       .table-intro, .concept-note, thead th { font-size: 11px; }
       tbody th, tbody td, tfoot th, tfoot td { padding: 12px 18px; font-size: 12px; }
       .footer { font-size: 10px; }
+    }
+
+    /* Comparación simultánea: cada dato conserva su escenario explícito.
+       En celular, cada fila de la tabla muestra las dos cifras juntas. */
+    .family-info { margin-top: 15px; padding: 16px; border: 1px solid #E7D5AD; border-left: 3px solid var(--gold); border-radius: 9px; background: #FFFBF2; color: var(--muted); font-size: 14px; }
+    .family-info > strong { display: block; color: var(--navy); font-size: 16px; }
+    .family-info p { margin-top: 7px; }
+    .family-info p strong { color: var(--navy); }
+    .base-summary h3 { margin-bottom: 12px; color: var(--navy); font-size: 14px; font-weight: 650; }
+    .base-summary .summary-line + .summary-line { margin-top: 10px; }
+    .summary-line span { max-width: none; }
+    .summary-line output { font-size: 18px; }
+    .total-card h2 { max-width: none; }
+    .total-meaning { margin-top: 14px; }
+    .scenario-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .scenario-card { min-width: 0; padding: 18px 17px; border: 1px solid #FFFFFF40; border-radius: 11px; background: #FFFFFF09; }
+    .scenario-card.with-family { border-color: #E3A790; background: #FFFFFF10; }
+    .scenario-card h3 { color: white; font-size: 17px; line-height: 1.4; font-weight: 650; }
+    .scenario-card h3 span { display: block; font-size: 14px; color: #E2EBF8; font-weight: 400; }
+    .scenario-card.with-family h3 { color: #F9D99A; }
+    .scenario-card .total-amount { margin-top: 15px; font-size: clamp(28px, 2.75vw, 37px); letter-spacing: -.04em; }
+    .scenario-card.with-family .total-amount { color: #F9D99A; }
+    .scenario-card .total-amount[data-long="true"] { font-size: 26px; }
+    .scenario-detail { margin-top: 14px; padding-top: 12px; border-top: 1px solid #FFFFFF2B; }
+    .scenario-base { color: #E2EBF8; font-size: 14px; }
+    .scenario-base output { display: block; margin-top: 2px; color: white; font-weight: 650; font-size: 17px; }
+    .scenario-rate { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .scenario-rate .increment-badge { font-size: 14px; padding: 3px 7px; }
+    .scenario-rate small { color: #E2EBF8; font-size: 13px; line-height: 1.4; }
+    .comparison-help { display: flex; gap: 11px; margin: 0 25px 20px; padding: 15px 17px; border: 1px solid #DAE4F0; border-radius: 9px; background: #F4F7FB; font-size: 14px; color: var(--muted); }
+    .comparison-help svg { margin-top: 2px; color: var(--navy); }
+    .comparison-help strong { color: var(--navy); }
+    .comparison-table col.concept-col { width: 42%; }
+    .comparison-table col.rate-col { width: 14%; }
+    .comparison-table col.scenario-col { width: 22%; }
+    .comparison-table thead th { padding: 14px 18px; font-size: 14px; line-height: 1.45; vertical-align: middle; }
+    .comparison-table thead th:first-child { padding-left: 25px; }
+    .comparison-table .column-scenario { color: var(--navy); }
+    .comparison-table th.with-family, .comparison-table td.with-family { background: #FFFAEE; }
+    .comparison-table tbody td { padding: 18px; }
+    .comparison-table tbody th { padding-right: 18px; }
+    .comparison-table .rate-cell { text-align: center; color: var(--muted); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .rate-value { display: inline-block; white-space: nowrap; }
+    .comparison-table .amount-cell { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .cell-amount { display: block; overflow-wrap: anywhere; }
+    .mobile-cell-label { display: none; }
+    .comparison-table tfoot td { padding-inline: 18px; }
+    .comparison-table tfoot .rate-cell { color: var(--navy); }
+    .comparison-table tfoot .with-family { background: #FBEDCB; }
+    .rounding-note { padding: 15px 25px 18px; color: var(--muted); font-size: 13px; }
+    .benefit-values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+    .benefit-value { min-width: 0; }
+    .benefit-value output { flex-shrink: 0; max-width: 100%; }
+    .scenario-mini-label { display: block; color: var(--muted); font-size: 14px; line-height: 1.4; }
+    .benefit-value + .benefit-value { padding-left: 16px; border-left: 1px solid var(--line); }
+    .planning-card .benefit-value output { font-size: 27px; }
+    .technical-metrics { grid-template-columns: 1fr; }
+    .technical-metric { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.5fr); gap: 20px; }
+    .technical-metric .benefit-values { margin-top: 0; }
+    .technical-metric output { font-size: 22px; }
+    .dock-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .dock-heading > span { color: var(--navy); font-size: 13px; font-weight: 600; }
+    .dock-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    @media (max-width: 1080px) and (min-width: 761px) {
+      .scenario-grid { grid-template-columns: 1fr; }
+      .scenario-card { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; align-items: center; }
+      .scenario-card .total-amount { text-align: right; margin-top: 0; font-size: 29px; }
+      .scenario-detail { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .scenario-rate { margin-top: 0; max-width: 160px; }
+      .planning-card .benefit-value output { font-size: 24px; }
+    }
+    @media (max-width: 760px) {
+      html { scroll-padding-bottom: 180px; }
+      main { padding-bottom: calc(180px + env(safe-area-inset-bottom, 0px)); }
+      .scenario-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .scenario-card { padding: 16px; }
+      .scenario-card .total-amount { font-size: 33px; }
+      .comparison-help { margin-inline: 20px; }
+      .comparison-table thead th, .comparison-table tbody th, .comparison-table tbody td, .comparison-table tfoot th, .comparison-table tfoot td { padding-inline: 14px; }
+      .comparison-table .concept { gap: 8px; }
+      .comparison-table .amount-cell { font-size: 15px; }
+      .comparison-table .rate-cell { font-size: 14px; }
+      .mobile-dock { display: grid; gap: 10px; padding-top: 10px; padding-bottom: calc(11px + env(safe-area-inset-bottom, 0px)); }
+      .mobile-edit { min-height: 44px; padding-block: 8px; font-size: 14px; }
+      .mobile-dock-total span { font-size: 12px; }
+      .mobile-dock-total output { font-size: 21px; }
+      .technical-metric { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 600px) {
+      .scenario-grid { grid-template-columns: 1fr; }
+      .scenario-card { padding: 18px; }
+      .scenario-card h3 { font-size: 18px; }
+      .scenario-card h3 span { display: inline; font-size: inherit; color: inherit; font-weight: inherit; }
+      .scenario-card .total-amount { font-size: 37px; }
+      .scenario-detail { display: flex; justify-content: space-between; gap: 12px; }
+      .scenario-base { min-width: 0; }
+      .scenario-rate { margin-top: 0; max-width: 135px; align-content: start; }
+      .comparison-table, .comparison-table tbody, .comparison-table tfoot { display: block; width: 100%; }
+      .comparison-table colgroup { display: none; }
+      .comparison-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .comparison-table tbody tr, .comparison-table tfoot tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 20px 16px; border-bottom: 1px solid var(--line); }
+      .comparison-table th[scope="row"] { grid-column: 1 / -1; padding: 0 0 10px; border: 0; background: transparent; font-size: 16px; }
+      .comparison-table .rate-cell { grid-column: 1 / -1; padding: 0 0 14px; border: 0; text-align: left; background: transparent; font-size: 14px; }
+      .comparison-table .rate-cell .mobile-cell-label { display: inline; margin-right: 5px; }
+      .comparison-table .amount-cell { display: flex; flex-direction: column; gap: 7px; padding: 12px 10px; border: 0; text-align: left; background: #F1F5F9; border-radius: 8px; font-size: 16px; }
+      .comparison-table .amount-cell:not(.with-family) { margin-right: 5px; }
+      .comparison-table .amount-cell.with-family { margin-left: 5px; background: #FFF3D8; }
+      .comparison-table .amount-cell .mobile-cell-label { display: block; color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.4; }
+      .comparison-table tfoot { background: #EDF2F8; }
+      .comparison-table tfoot tr { border-bottom: 0; }
+      .rounding-note { padding-inline: 18px; }
+      .benefit-values { grid-template-columns: 1fr; gap: 14px; }
+      .benefit-value { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
+      .benefit-value .scenario-mini-label { max-width: 140px; }
+      .benefit-value + .benefit-value { border-left: 0; padding: 14px 0 0; border-top: 1px solid var(--line); }
+      .planning-card .benefit-value output { margin-top: 0; font-size: 25px; }
+      .technical-metric .benefit-value output { font-size: 22px; }
+    }
+    @media (max-width: 380px) {
+      .scenario-card { padding: 15px; }
+      .scenario-card .total-amount { font-size: 33px; }
+      .scenario-card .total-amount[data-long="true"] { font-size: 24px; }
+      .scenario-detail { display: block; }
+      .scenario-base { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+      .scenario-base output { margin-top: 0; }
+      .scenario-rate { margin-top: 12px; max-width: none; }
+      .comparison-help { margin-inline: 16px; padding-inline: 13px; }
+      .comparison-table tbody tr, .comparison-table tfoot tr { padding-inline: 12px; }
+      .comparison-table .amount-cell { padding-inline: 8px; font-size: 15px; }
+      .benefit-value { flex-wrap: wrap; gap: 7px; }
+      .planning-card .benefit-value output { font-size: 24px; }
+      .mobile-dock-total output { font-size: 19px; }
+    }
+    @media print {
+      .family-info, .summary-line, .base-summary h3 { font-size: 11px; }
+      .family-info { padding: 10px; }
+      .family-info > strong { font-size: 12px; }
+      .total-meaning { font-size: 11px; }
+      .scenario-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
+      .scenario-card { display: block; padding: 13px; }
+      .scenario-card h3 { font-size: 14px; }
+      .scenario-card h3 span { display: inline; font-size: inherit; }
+      .scenario-card .total-amount { margin-top: 8px; font-size: 28px; text-align: left; }
+      .scenario-detail { display: flex; margin-top: 10px; padding-top: 8px; }
+      .scenario-base, .scenario-rate small { font-size: 10px; }
+      .scenario-base output { font-size: 13px; }
+      .scenario-rate .increment-badge { font-size: 11px; }
+      .benefit-values { grid-template-columns: 1fr; gap: 9px; }
+      .benefit-value { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .benefit-value + .benefit-value { padding: 9px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+      .scenario-mini-label { font-size: 10px; }
+      .planning-card .benefit-value output { font-size: 18px; }
+      .comparison-help { font-size: 11px; padding: 12px; margin: 0 18px 15px; }
+      .comparison-table { display: table; }
+      .comparison-table colgroup { display: table-column-group; }
+      .comparison-table thead { display: table-header-group; position: static; width: auto; height: auto; margin: 0; overflow: visible; clip: auto; white-space: normal; }
+      .comparison-table tbody { display: table-row-group; }
+      .comparison-table tfoot { display: table-footer-group; }
+      .comparison-table tbody tr, .comparison-table tfoot tr { display: table-row; }
+      .comparison-table th[scope="row"], .comparison-table .rate-cell, .comparison-table .amount-cell { display: table-cell; padding: 11px 12px; font-size: 11px; border-radius: 0; }
+      .comparison-table .rate-cell { text-align: center; }
+      .comparison-table .amount-cell { text-align: right; }
+      .comparison-table thead th { padding: 12px; font-size: 10px; }
+      .comparison-table .mobile-cell-label { display: none !important; }
+      .rounding-note { font-size: 10px; }
     }
   </style>
 </head>
@@ -303,13 +467,12 @@
       <div>
         <p class="eyebrow">Calculadora de costo laboral</p>
         <h1>Tu sueldo y tus beneficios</h1>
-        <p class="intro">Escribe tu sueldo y revisa el costo mensual estimado para la empresa.</p>
+        <p class="intro">Compara el costo para la empresa con y sin asignación familiar.</p>
       </div>
-      <button type="button" id="print-button" class="button-quiet" aria-label="Imprimir o guardar el cálculo en PDF" disabled>
+      <button type="button" id="print-button" class="button-quiet" aria-label="Imprimir o guardar la comparación en PDF" disabled>
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg><span class="print-label">Imprimir</span>
       </button>
     </div>
-
     <div class="workspace grid">
       <aside aria-labelledby="input-heading">
         <section class="panel input-panel">
@@ -317,135 +480,127 @@
           <p class="section-description">Ten a la mano tu boleta de pago.</p>
           <form id="calculator-form" novalidate>
             <label class="field-label" for="salary">Sueldo básico mensual</label>
-            <div class="money-input">
-              <span class="money-prefix" aria-hidden="true">S/</span>
-              <input id="salary" name="salary" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ejemplo: 2000" required autocomplete="off" aria-describedby="salary-help input-error" aria-invalid="false">
-            </div>
+            <div class="money-input"><span class="money-prefix" aria-hidden="true">S/</span><input id="salary" name="salary" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ejemplo: 2000" required autocomplete="off" aria-describedby="salary-help input-error" aria-invalid="false"></div>
             <p id="salary-help" class="help-text">Busca el <strong>sueldo básico del mes, antes de los descuentos</strong>. No sumes aquí la asignación familiar.</p>
             <p id="input-error" class="error" hidden></p>
             <button class="example-button" id="example-button" type="button">Usar ejemplo de S/ 2,000</button>
-
-            <label class="family-option" for="family">
-              <input id="family" name="family" type="checkbox" aria-labelledby="family-label" aria-describedby="family-detail family-fixed">
-              <span class="family-copy">
-                <span class="family-title" id="family-label">Incluir asignación familiar</span>
-                <span id="family-detail" class="family-detail">Márcala si figura en tu boleta o si Recursos Humanos te confirmó que te corresponde.</span>
-                <span class="family-amount" id="family-fixed">+ S/ 123.00 al mes</span>
-              </span>
-            </label>
-            <div class="base-summary">
-              <div class="summary-line"><span>Sueldo + asignación familiar</span><output aria-live="off" for="salary family" data-result="base">—</output></div>
+            <div class="family-info">
+              <strong>Un sueldo, dos escenarios</strong>
+              <p>Comparamos el sueldo sin asignación familiar y con <strong data-reference="familyAllowance">S/ 123.00</strong> de asignación al mes.</p>
+              <p>Para saber cuál te corresponde, revisa tu boleta o consulta a Recursos Humanos.</p>
             </div>
-            <button type="submit" class="primary-button">Ver resultado<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
-            <p class="auto-note">El cálculo también cambia al editar tus datos.</p>
+            <div class="base-summary">
+              <h3>Sueldo usado en cada caso</h3>
+              <div class="summary-line"><span>Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="base" data-scenario="withoutFamily">—</output></div>
+              <div class="summary-line"><span>Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="base" data-scenario="withFamily">—</output></div>
+            </div>
+            <button type="submit" class="primary-button">Comparar resultados<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+            <p class="auto-note">Ambos resultados cambian al editar tu sueldo.</p>
           </form>
         </section>
         <div class="left-note"><strong>Si no encuentras el sueldo básico</strong>Consulta a Recursos Humanos qué importe de tu boleta debes ingresar.</div>
       </aside>
-
       <section class="results" aria-labelledby="total-heading">
-        <div class="total-card" id="monthly-result" tabindex="-1" aria-labelledby="total-heading" aria-describedby="total-meaning total-explanation pay-explanation">
+        <div class="total-card" id="monthly-result" tabindex="-1" aria-labelledby="total-heading" aria-describedby="total-meaning total-explanation">
           <div class="total-topline"><span class="step" aria-hidden="true">2</span><span>Revisa el resultado</span><span class="period-badge">Por trabajador</span></div>
-          <h2 id="total-heading">Costo mensual estimado<br>para la empresa</h2>
-          <p id="result-context" class="result-context">Escribe tu sueldo para ver el cálculo.</p>
-          <output aria-live="off" id="total-amount" class="total-amount" for="salary family" data-result="total">—</output>
-          <p class="total-meaning" id="total-meaning">Este total no es el depósito a tu cuenta.</p>
-          <p class="total-explanation" id="total-explanation">Incluye el sueldo, los beneficios calculados por mes y el aporte a EsSalud.</p>
-          <div id="result-details" hidden>
-            <div class="increment-line"><span class="increment-badge" id="additional-percent">—</span><span class="increment-label">de costo adicional respecto al sueldo básico</span></div>
-            <div class="total-metrics grid">
-              <div class="metric"><span class="metric-label">Sueldo + asignación</span><output aria-live="off" class="metric-value" for="salary family" data-result="base">—</output></div>
-              <div class="metric"><span class="metric-label">Beneficios y EsSalud por mes</span><output aria-live="off" class="metric-value" for="salary family" data-result="monthlyExtras">—</output></div>
-            </div>
+          <h2 id="total-heading">Costo mensual estimado para la empresa</h2>
+          <p id="result-context" class="result-context">Escribe tu sueldo para comparar los dos casos.</p>
+          <p class="total-meaning" id="total-meaning">Estos costos no son el depósito a tu cuenta.</p>
+          <div class="scenario-grid">
+            <section class="scenario-card" aria-labelledby="heading-withoutFamily">
+              <h3 id="heading-withoutFamily">Sin <span>asignación familiar</span></h3>
+              <output aria-live="off" for="salary" class="total-amount" data-result="total" data-scenario="withoutFamily">—</output>
+              <div class="scenario-detail" data-valid-only hidden>
+                <div class="scenario-base">Sueldo usado<output aria-live="off" for="salary" class="" data-result="base" data-scenario="withoutFamily">—</output></div>
+                <div class="scenario-rate"><output aria-live="off" for="salary" class="increment-badge" data-result="additionalPercent" data-scenario="withoutFamily" data-format="percent">—</output><small>de costo adicional<br>sobre el sueldo básico</small></div>
+              </div>
+            </section>
+            <section class="scenario-card with-family" aria-labelledby="heading-withFamily">
+              <h3 id="heading-withFamily">Con <span>asignación familiar</span></h3>
+              <output aria-live="off" for="salary" class="total-amount" data-result="total" data-scenario="withFamily">—</output>
+              <div class="scenario-detail" data-valid-only hidden>
+                <div class="scenario-base">Sueldo usado<output aria-live="off" for="salary" class="" data-result="base" data-scenario="withFamily">—</output></div>
+                <div class="scenario-rate"><output aria-live="off" for="salary" class="increment-badge" data-result="additionalPercent" data-scenario="withFamily" data-format="percent">—</output><small>de costo adicional<br>sobre el sueldo básico</small></div>
+              </div>
+            </section>
           </div>
+          <p class="total-explanation" id="total-explanation">Cada monto incluye el sueldo, los beneficios calculados por mes y el aporte a EsSalud.</p>
         </div>
-        <div class="pay-note" id="pay-explanation">
+        <div class="pay-note">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>
           <div><strong>Revisa el pago final en tu boleta.</strong><p>El pago que recibes depende de los descuentos de tu boleta. Esta calculadora no aplica esos descuentos.</p></div>
         </div>
-        <!-- Una sola región anuncia cambios; los importes no se leen en coro. -->
+        <aside class="scope-note" aria-labelledby="scope-heading">
+          <h3 id="scope-heading">Conceptos no incluidos</h3>
+          <p>Este cálculo no incluye utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación.</p>
+        </aside>
         <p id="calculation-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
       </section>
     </div>
-
     <section class="panel planning" aria-labelledby="planning-heading">
       <h2 id="planning-heading">Beneficios que se pagan en otras fechas</h2>
-      <p class="planning-intro">Estas estimaciones suponen que completas un semestre (6 meses) con el mismo sueldo.</p>
+      <p class="planning-intro">Estas estimaciones suponen que completas un semestre (6 meses) con el mismo sueldo. Compara ambos escenarios.</p>
       <div class="planning-grid grid">
-        <article class="planning-card">
-          <h3>Gratificación por 6 meses</h3>
-          <output aria-live="off" for="salary family" data-result="semesterGratification">—</output>
-          <p>Incluye el extra del 9% que acompaña a la gratificación.</p>
-        </article>
-        <article class="planning-card">
-          <h3>Depósito de CTS por 6 meses</h3>
-          <output aria-live="off" for="salary family" data-result="semesterCTS">—</output>
-          <p>CTS: beneficio por tu tiempo de servicio.</p>
-        </article>
+        <article class="planning-card"><h3>Gratificación por 6 meses</h3><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="semesterGratification" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="semesterGratification" data-scenario="withFamily">—</output></div></div><p>Incluye el extra del 9% que acompaña a la gratificación.</p></article>
+        <article class="planning-card"><h3>Depósito de CTS por 6 meses</h3><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="semesterCTS" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="semesterCTS" data-scenario="withFamily">—</output></div></div><p>CTS: beneficio por tu tiempo de servicio.</p></article>
       </div>
-      <p class="planning-footnote">Estos beneficios ya están considerados en el costo mensual. No vuelvas a sumarlos al total.</p>
+      <p class="planning-footnote">Estos beneficios ya están considerados en cada costo mensual. No vuelvas a sumarlos al total.</p>
     </section>
-
     <section class="panel breakdown" aria-labelledby="breakdown-heading">
       <div class="table-heading">
         <h2 id="breakdown-heading">¿Qué incluye el costo mensual?</h2>
         <p class="table-intro" id="breakdown-help">Para este cálculo, repartimos las gratificaciones, la CTS y las vacaciones entre los meses del año. <strong>No son pagos adicionales cada mes.</strong></p>
       </div>
-      <table aria-describedby="breakdown-help">
-        <caption class="sr-only">Partes del costo mensual estimado para la empresa, en soles.</caption>
-        <colgroup><col class="concept-col"><col class="amount-col"></colgroup>
-        <thead><tr><th scope="col">Qué se incluye</th><th scope="col" class="number">Estimación por mes</th></tr></thead>
+      <div class="comparison-help" id="percentage-help">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>
+        <p><strong>El porcentaje se aplica a la base de cada columna:</strong> sin asignación, tu sueldo básico; con asignación, tu sueldo básico más <strong data-reference="familyAllowance">S/ 123.00</strong>.</p>
+      </div>
+      <table class="comparison-table" aria-describedby="breakdown-help percentage-help">
+        <caption class="sr-only">Comparación mensual en soles: concepto, porcentaje de cada base, sin asignación familiar y con asignación familiar.</caption>
+        <colgroup><col class="concept-col"><col class="rate-col"><col class="scenario-col"><col class="scenario-col"></colgroup>
+        <thead><tr><th scope="col">Qué se incluye</th><th scope="col" class="rate-cell">Porcentaje<br>de cada base</th><th scope="col" class="number column-scenario">Sin asignación familiar</th><th scope="col" class="number column-scenario with-family">Con asignación familiar</th></tr></thead>
         <tbody>
-          <tr><th scope="row"><span class="concept"><span class="swatch" aria-hidden="true"></span><span>Sueldo + asignación familiar<span class="concept-note">Antes de descuentos. La asignación se incluye si la activas.</span></span></span></th><td class="number" data-result="base">—</td></tr>
-          <tr><th scope="row"><span class="concept"><span class="swatch gratification" aria-hidden="true"></span><span>Gratificaciones<span class="concept-note">Parte mensual de las dos gratificaciones del año.</span></span></span></th><td class="number" data-result="gratificationPrincipal">—</td></tr>
-          <tr><th scope="row"><span class="concept"><span class="swatch bonus" aria-hidden="true"></span><span>Extra de las gratificaciones<span class="concept-note">La bonificación del 9%, repartida por mes.</span></span></span></th><td class="number" data-result="extraordinaryBonus">—</td></tr>
-          <tr><th scope="row"><span class="concept"><span class="swatch cts" aria-hidden="true"></span><span>CTS: beneficio por tiempo de servicio<span class="concept-note">Parte mensual del beneficio que se deposita por semestre.</span></span></span></th><td class="number" data-result="cts">—</td></tr>
-          <tr><th scope="row"><span class="concept"><span class="swatch vacations" aria-hidden="true"></span><span>Vacaciones: descanso pagado<span class="concept-note">Parte mensual del descanso pagado. No es un bono adicional.</span></span></span></th><td class="number" data-result="vacations">—</td></tr>
-          <tr><th scope="row"><span class="concept"><span class="swatch essalud" aria-hidden="true"></span><span>EsSalud: seguro de salud<span class="concept-note">Lo paga la empresa. Este aporte no se descuenta de tu sueldo.</span></span></span></th><td class="number" data-result="essalud">—</td></tr>
+          <tr><th scope="row"><span class="concept"><span class="swatch " aria-hidden="true"></span><span>Sueldo usado para el cálculo<span class="concept-note">Sin asignación: sueldo básico. Con asignación: sueldo básico más asignación familiar.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="base">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="base" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="base" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch gratification" aria-hidden="true"></span><span>Gratificaciones<span class="concept-note">Parte mensual de las dos gratificaciones del año.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="gratificationPrincipal">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="gratificationPrincipal" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="gratificationPrincipal" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch bonus" aria-hidden="true"></span><span>Extra de las gratificaciones<span class="concept-note">Bonificación del 9% de las gratificaciones, repartida por mes.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="extraordinaryBonus">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="extraordinaryBonus" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="extraordinaryBonus" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch cts" aria-hidden="true"></span><span>CTS: beneficio por tiempo de servicio<span class="concept-note">Parte mensual del beneficio que se deposita por semestre.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="cts">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="cts" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="cts" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch vacations" aria-hidden="true"></span><span>Vacaciones: descanso pagado<span class="concept-note">Parte mensual del descanso pagado. No es un bono adicional.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="vacations">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="vacations" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="vacations" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch essalud" aria-hidden="true"></span><span>EsSalud: seguro de salud<span class="concept-note">Lo paga la empresa. Este aporte no se descuenta de tu sueldo.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="essalud">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withFamily">—</span></td></tr>
         </tbody>
-        <tfoot><tr><th scope="row">Costo estimado para la empresa</th><td class="number" data-result="total">—</td></tr></tfoot>
+        <tfoot><tr><th scope="row">Costo estimado para la empresa</th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="total">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withFamily">—</span></td></tr></tfoot>
       </table>
+      <p class="rounding-note">Porcentajes e importes mostrados con dos decimales. El cálculo conserva la precisión completa; por redondeo, la suma de las filas puede variar en algunos céntimos respecto al total.</p>
     </section>
     <details class="panel method">
-      <summary><svg class="info-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>Ver porcentajes, fórmulas y condiciones<svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <summary><svg class="info-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>Ver fórmulas, condiciones y fuentes<svg class="chevron" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m6 9 6 6 6-6"/></svg></summary>
       <div class="method-content">
-        <p class="method-intro"><strong>B = sueldo bruto + asignación familiar aplicable.</strong> Estimación mensual según el modelo solicitado: remuneración fija, períodos completos y cobertura EsSalud. Los beneficios se distribuyen en doce meses para fines de presupuesto.</p>
+        <p class="method-intro"><strong>B es la base de cada escenario: sueldo básico sin asignación, o sueldo básico más asignación familiar.</strong> Estimación mensual según el modelo solicitado: remuneración fija, períodos completos y cobertura EsSalud. Los beneficios se distribuyen en doce meses para fines de presupuesto.</p>
         <div class="formula-grid grid">
           <div class="formula"><strong>Gratificaciones + bono</strong><code>(B × 2 × 1.09) / 12</code></div>
           <div class="formula"><strong>CTS</strong><code>(B + B / 6) / 12</code></div>
           <div class="formula"><strong>Vacaciones</strong><code>B / 12</code></div>
           <div class="formula"><strong>EsSalud</strong><code>B × 0.09</code></div>
         </div>
-        <h3>Porcentajes de referencia</h3>
-        <p>Todos los porcentajes de esta tabla se aplican a B: sueldo básico más asignación familiar. Se muestran con dos decimales.</p>
-        <table class="reference-table">
-          <caption class="sr-only">Porcentajes mensuales sobre el sueldo más asignación familiar.</caption>
-          <thead><tr><th scope="col">Concepto</th><th scope="col" class="number">% de B</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Sueldo + asignación familiar</th><td class="number">100.00%</td></tr>
-            <tr><th scope="row">Gratificaciones, sin bonificación</th><td class="number" id="gratificationPrincipal-rate">16.67%</td></tr>
-            <tr><th scope="row">Bonificación extraordinaria</th><td class="number" id="extraordinaryBonus-rate">1.50%</td></tr>
-            <tr><th scope="row">CTS (compensación por tiempo de servicios)</th><td class="number" id="cts-rate">9.72%</td></tr>
-            <tr><th scope="row">Vacaciones</th><td class="number" id="vacations-rate">8.33%</td></tr>
-            <tr><th scope="row">EsSalud</th><td class="number" id="essalud-rate">9.00%</td></tr>
-          </tbody>
-          <tfoot><tr><th scope="row">Costo total sobre B</th><td class="number" id="total-base-percent">145.22%</td></tr></tfoot>
-        </table>
-        <p class="method-intro">RMV configurada: <strong id="rmv-value">S/ 1,230.00</strong>. La asignación familiar es el 10% de la RMV. El modelo conserva todos los decimales al sumar; por ello la suma de los importes mostrados puede variar en algunos céntimos respecto al total.</p>
+        <h3>Cómo leer la columna de porcentajes</h3>
+        <p>Se muestra el porcentaje mensual de cada concepto sobre B. La tasa es igual en ambos escenarios; cambia la base sobre la que se aplica. Gratificaciones: 16.67%; bonificación extraordinaria: 1.50%; CTS: 9.72%; vacaciones: 8.33%; EsSalud: 9.00%. Son porcentajes de referencia redondeados; se calcula con las fórmulas completas.</p>
+        <p class="method-intro">RMV configurada: <strong data-reference="rmv">S/ 1,230.00</strong>. La asignación familiar es el 10% de la RMV. El modelo conserva todos los decimales al sumar; por ello la suma de los importes mostrados puede variar en algunos céntimos respecto al total.</p>
         <h3>Referencias para presupuesto</h3>
-        <div class="technical-metrics grid">
-          <div class="technical-metric"><strong>Costo diario para la empresa</strong><output aria-live="off" for="salary family" data-result="dailyCost">—</output><p>Costo mensual dividido entre 30. Es una referencia de presupuesto, no el sueldo por día trabajado.</p></div>
-          <div class="technical-metric"><strong>Costo adicional al sueldo básico</strong><output aria-live="off" for="salary family" data-result="additional">—</output><p>Incluye asignación familiar, si se activa, y los beneficios y aportes del modelo.</p></div>
-          <div class="technical-metric"><strong>Factor sobre el sueldo básico</strong><output aria-live="off" id="salary-factor" for="salary family">—</output><p>Costo mensual dividido entre el sueldo básico ingresado.</p></div>
-        </div>
+        <div class="technical-metrics grid"><div class="technical-metric"><div><strong>Costo diario para la empresa</strong><p>Costo mensual dividido entre 30. Referencia para presupuesto; no equivale al sueldo por día trabajado.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="dailyCost" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="dailyCost" data-scenario="withFamily">—</output></div></div></div><div class="technical-metric"><div><strong>Costo adicional al sueldo básico</strong><p>Cada total menos el sueldo básico ingresado. El escenario con asignación incorpora también ese beneficio.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="additional" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="additional" data-scenario="withFamily">—</output></div></div></div><div class="technical-metric"><div><strong>Factor sobre el sueldo básico</strong><p>Costo mensual de cada escenario dividido entre el sueldo básico ingresado.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="salaryFactor" data-scenario="withoutFamily" data-format="factor">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="salaryFactor" data-scenario="withFamily" data-format="factor">—</output></div></div></div></div>
         <h3>Fórmulas de los indicadores adicionales</h3>
         <p><strong>Gratificación por semestre:</strong> B × 1.09. <strong>CTS por semestre:</strong> (B + B / 6) / 2. <strong>Costo diario referencial:</strong> total mensual / 30. El divisor de 30 días es una referencia presupuestal; no representa días efectivamente trabajados.</p>
         <p><strong>Bonificación extraordinaria desglosada:</strong> (B × 2 × 0.09) / 12, equivalente al 1.50% de B cada mes. Se muestra en una fila propia y se suma una sola vez. Gratificaciones y bonificación suman, juntas, aproximadamente el 18.17% de B.</p>
         <h3>Cómo interpretar el resultado</h3>
-        <p>El total suma B y los cinco conceptos de la tabla. El indicador adicional se calcula como <strong>(total − sueldo bruto) / sueldo bruto × 100</strong>. Por eso aumenta al activar la asignación familiar, aunque las provisiones y el aporte sigan representando el 45.22% de B.</p>
+        <p>El total suma B y los cinco conceptos de la tabla. El indicador adicional se calcula como <strong>(total − sueldo bruto) / sueldo bruto × 100</strong>. Por eso el porcentaje adicional es mayor en el escenario con asignación familiar, aunque los beneficios y el aporte representen aproximadamente el 45.22% de la base de cada escenario.</p>
         <p>En CTS, B / 6 corresponde a la sexta parte de una gratificación semestral sin bonificación. La provisión de vacaciones es presupuestal; el resultado no equivale al desembolso efectivo de cada mes. El cálculo incluye exclusivamente los conceptos de esta tabla.</p>
+        <h3>Conceptos no incluidos en ambos escenarios</h3>
+        <p>Este cálculo no incluye utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación.</p>
         <p><strong>Seguros pendientes de configuración:</strong> SCTR y Vida Ley requieren las tasas y condiciones verificadas de las pólizas de Halema. Esta versión no les asigna un porcentaje ni los incorpora al total.</p>
-        <h3>Referencias de la versión · 31 de octubre de 2026</h3>
+        <h3>Referencias del cálculo · parámetros revisados el 31 de octubre de 2026</h3>
         <ul class="sources">
           <li><strong>Reglas de negocio:</strong> fórmulas y alcance proporcionados para esta herramienta.</li>
           <li><strong>Fuentes adjuntas:</strong> D.S. 005-2002-TR, art. 3.3 (gratificaciones); TUO de la Ley de CTS, arts. 18 y 21; D. Leg. 713, arts. 10 y 15; Reglamento de descansos remunerados, art. 19; RIT Halema 2025, arts. 53–56.</li>
@@ -453,14 +608,15 @@
         </ul>
       </div>
     </details>
-
-    <footer class="footer"><span><strong>HALEMA</strong> · Recursos Humanos</span><span>Estimación con sueldo fijo · Régimen general del Perú</span></footer>
+    <footer class="footer"><span><strong>HALEMA</strong> · Recursos Humanos</span><span>Dos escenarios · Sueldo fijo · Régimen general del Perú</span></footer>
   </main>
-
-  <!-- El resumen móvil aparece solo cuando hay un cálculo válido. -->
-  <nav class="mobile-dock" id="mobile-dock" aria-label="Costo para la empresa y acceso al sueldo" hidden>
-    <div class="mobile-dock-total"><span id="mobile-total-label">Costo empresa / mes</span><output aria-live="off" for="salary family" data-result="total">—</output></div>
-    <button class="mobile-edit" id="edit-salary-button" type="button">Editar sueldo</button>
+  <!-- Ambos costos permanecen visibles en el resumen móvil. -->
+  <nav class="mobile-dock" id="mobile-dock" aria-label="Comparación de costos y acceso al sueldo" hidden>
+    <div class="dock-heading"><span id="mobile-total-label">Costos empresa / mes</span><button class="mobile-edit" id="edit-salary-button" type="button">Editar sueldo</button></div>
+    <div class="dock-figures">
+      <div class="mobile-dock-total"><span>Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="total" data-scenario="withoutFamily">—</output></div>
+      <div class="mobile-dock-total"><span>Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="total" data-scenario="withFamily">—</output></div>
+    </div>
   </nav>
 
   <script id="calculator-script">
@@ -489,24 +645,27 @@
     const numberFormat = new Intl.NumberFormat("es-PE", {
       minimumFractionDigits: 2, maximumFractionDigits: 2
     });
-    const money = value => currencyFormat.format(value);
+    // Corregir únicamente residuos de punto flotante al mostrar céntimos.
+    // Ej.: 20.294999999999998 debe mostrarse como 20.30, no como 20.29.
+    // Los importes del modelo se mantienen sin redondear para sumar el total.
+    function money(value) {
+      const cents = value * 100;
+      const tolerance = Math.min(1e-7, Number.EPSILON * Math.max(1, Math.abs(cents)) * 2);
+      return currencyFormat.format(Math.round(cents + tolerance) / 100);
+    }
     const percent = value => numberFormat.format(value) + "%";
 
     const ui = {
       form: document.getElementById("calculator-form"),
       salary: document.getElementById("salary"),
-      family: document.getElementById("family"),
       error: document.getElementById("input-error"),
-      total: document.getElementById("total-amount"),
-      additionalPercent: document.getElementById("additional-percent"),
-      salaryFactor: document.getElementById("salary-factor"),
       status: document.getElementById("calculation-status"),
       print: document.getElementById("print-button"),
       monthlyResult: document.getElementById("monthly-result"),
       editSalary: document.getElementById("edit-salary-button"),
       example: document.getElementById("example-button"),
       context: document.getElementById("result-context"),
-      resultDetails: document.getElementById("result-details"),
+      validOnly: document.querySelectorAll("[data-valid-only]"),
       mobileDock: document.getElementById("mobile-dock"),
       mobileLabel: document.getElementById("mobile-total-label"),
       resultNodes: document.querySelectorAll("[data-result]")
@@ -582,8 +741,15 @@
       }, immediately ? 0 : 450);
     }
 
-    // Al abrir la página no se atribuye un sueldo ficticio al trabajador.
-    // El ejemplo se activa con un botón y queda identificado en el resultado.
+    // Un mismo sueldo genera dos resultados independientes. Cada celda indica
+    // su escenario con data-scenario, evitando mezclar bases o sobrescribirlo.
+    function calculateComparison(salary) {
+      return {
+        withoutFamily: calculateLaborCost(salary, false),
+        withFamily: calculateLaborCost(salary, true)
+      };
+    }
+
     function updateCalculator(announceResult = true, immediate = false, showErrors = true) {
       const error = validateSalary();
       const visibleError = showErrors ? error : "";
@@ -591,56 +757,64 @@
       ui.error.hidden = !visibleError;
       ui.salary.setAttribute("aria-invalid", visibleError ? "true" : "false");
       ui.print.disabled = Boolean(error);
-      ui.resultDetails.hidden = Boolean(error);
+      ui.validOnly.forEach(node => { node.hidden = Boolean(error); });
       ui.mobileDock.hidden = Boolean(error);
 
       if (error) {
-        ui.resultNodes.forEach(node => { node.textContent = "—"; });
-        ui.additionalPercent.textContent = "—";
-        ui.salaryFactor.textContent = "—";
-        ui.total.dataset.long = "false";
+        ui.resultNodes.forEach(node => {
+          node.textContent = "—";
+          if (node.classList.contains("total-amount")) node.dataset.long = "false";
+        });
         ui.context.classList.remove("is-example");
         ui.context.textContent = showErrors
-          ? "Revisa el sueldo para ver el resultado."
-          : "Escribe tu sueldo para ver el cálculo.";
+          ? "Revisa el sueldo para ver ambos resultados."
+          : "Escribe tu sueldo para comparar los dos casos.";
         if (announceResult && showErrors) announce(error, immediate);
         return false;
       }
 
-      const result = calculateLaborCost(ui.salary.valueAsNumber, ui.family.checked);
+      const comparison = calculateComparison(ui.salary.valueAsNumber);
       ui.resultNodes.forEach(node => {
-        node.textContent = money(result[node.dataset.result]);
+        const value = comparison[node.dataset.scenario][node.dataset.result];
+        const format = node.dataset.format;
+        node.textContent = format === "percent" ? "+" + percent(value)
+          : format === "factor" ? numberFormat.format(value) + "×"
+          : money(value);
+        if (node.classList.contains("total-amount")) {
+          node.dataset.long = String(node.textContent.length > 14);
+        }
       });
-      ui.additionalPercent.textContent = "+" + percent(result.additionalPercent);
-      ui.salaryFactor.textContent = numberFormat.format(result.salaryFactor) + "×";
-      ui.total.dataset.long = String(money(result.total).length > 14);
       ui.context.classList.toggle("is-example", showingExample);
       ui.context.textContent = showingExample
-        ? "Ejemplo: sueldo de " + money(result.salary) + ". Cámbialo por el tuyo."
-        : "Calculado con los datos que ingresaste.";
-      ui.mobileLabel.textContent = showingExample ? "Ejemplo · costo empresa / mes" : "Costo empresa / mes";
-      document.getElementById("total-base-percent").textContent = percent(result.totalBasePercent);
+        ? "Ejemplo: sueldo básico de " + money(ui.salary.valueAsNumber) + ". Cámbialo por el tuyo."
+        : "Dos escenarios para el mismo sueldo básico.";
+      ui.mobileLabel.textContent = showingExample ? "Ejemplo · costos empresa / mes" : "Costos empresa / mes";
 
       if (announceResult) {
-        announce((showingExample ? "Ejemplo. " : "") + "Costo mensual estimado para la empresa: " +
-          money(result.total) + ". Este total no es el depósito a tu cuenta.", immediate);
+        announce((showingExample ? "Ejemplo. " : "") +
+          "Costo mensual para la empresa, sin asignación familiar: " + money(comparison.withoutFamily.total) +
+          ". Con asignación familiar: " + money(comparison.withFamily.total) +
+          ". Estos costos no son el depósito a tu cuenta.", immediate);
       }
       return true;
     }
 
-    // Los porcentajes de referencia se derivan de las mismas fórmulas.
+    // Un solo origen para los porcentajes visibles y los valores fijos.
     function initializeReferenceValues() {
       const reference = calculateLaborCost(100, false);
-      for (const concept of ["gratificationPrincipal", "extraordinaryBonus", "cts", "vacations", "essalud"]) {
-        document.getElementById(concept + "-rate").textContent = percent(reference[concept]);
-      }
-      document.getElementById("rmv-value").textContent = money(CONFIG.rmv);
-      document.getElementById("family-fixed").textContent =
-        "+ " + money(CONFIG.rmv * CONFIG.familyAllowanceRate) + " al mes";
+      document.querySelectorAll("[data-rate]").forEach(node => {
+        node.textContent = percent(reference[node.dataset.rate]);
+      });
+      document.querySelectorAll('[data-reference="familyAllowance"]').forEach(node => {
+        node.textContent = money(CONFIG.rmv * CONFIG.familyAllowanceRate);
+      });
+      document.querySelectorAll('[data-reference="rmv"]').forEach(node => {
+        node.textContent = money(CONFIG.rmv);
+      });
     }
 
     // ================================================================
-    // 4. EVENTOS: escritura, checkbox, botón y tecla Enter.
+    // 4. EVENTOS: escritura, ejemplo, botón y tecla Enter.
     // Todo se calcula localmente; no se envían remuneraciones a un servidor.
     // ================================================================
     function focusSection(element, block = "start") {
@@ -657,9 +831,6 @@
       ui.salary.value = "2000.00";
       showingExample = true;
       updateCalculator(true, true);
-    });
-    ui.family.addEventListener("change", () => {
-      updateCalculator(true, true, ui.salary.value.trim() !== "");
     });
     ui.form.addEventListener("submit", event => {
       event.preventDefault();
