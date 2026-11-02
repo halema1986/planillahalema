@@ -108,8 +108,19 @@
     .pay-note svg { margin-top: 3px; color: #846422; }
     .pay-note strong { display: block; color: #4C3C1E; font-weight: 700; }
     .pay-note p { margin-top: 4px; }
-    .scope-note { margin-top: 14px; padding: 17px 19px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 11px; background: white; color: var(--muted); font-size: 15px; }
-    .scope-note h3 { margin-bottom: 6px; color: var(--navy); font-size: 16px; font-weight: 700; }
+    .scope-link { display: flex; align-items: center; gap: 10px; min-height: 46px; margin-top: 18px; padding: 11px 13px; border: 1px solid #F1C86F; border-radius: 8px; background: #FFFFFF0D; color: #FFE2A6; font-size: 15px; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+    .scope-link:hover { background: #FFFFFF1A; }
+    .scope-note { margin-top: 16px; padding: 22px; border: 2px solid var(--gold); border-left-width: 6px; border-radius: 13px; background: #FFF3CF; color: #4B3F29; font-size: 16px; scroll-margin-top: 16px; }
+    .scope-heading-wrap { display: flex; align-items: flex-start; gap: 12px; }
+    .scope-icon { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; border-radius: 9px; background: var(--gold); color: var(--navy-dark); }
+    .scope-icon svg { width: 25px; height: 25px; }
+    .scope-kicker { margin-bottom: 5px; color: #72500B; font-size: 12px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .scope-note h3 { color: var(--navy); font-size: clamp(18px, 1.8vw, 21px); line-height: 1.35; font-weight: 750; }
+    .scope-intro { margin-top: 14px; }
+    .scope-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 15px 0; padding: 0; list-style: none; }
+    .scope-list li { padding: 9px 11px; border: 1px solid #EAD29B; border-radius: 7px; background: #FFFFFFB3; color: var(--navy); font-size: 15px; font-weight: 600; }
+    .scope-list .scope-wide { grid-column: 1 / -1; }
+    .scope-consequence { margin-top: 14px; padding-top: 13px; border-top: 1px solid #DDB665; color: var(--navy); font-weight: 700; }
     .planning { margin-top: 24px; padding: 25px; }
     .planning-intro { margin-top: 8px; max-width: 850px; color: var(--muted); font-size: 15px; }
     .planning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 19px; }
@@ -254,6 +265,12 @@
       h1 { font-size: 25px; }
       .intro, .section-description, .total-explanation, .pay-note, .scope-note, .planning-intro { font-size: 11px; }
       .scope-note h3 { font-size: 12px; }
+      .scope-note { padding: 14px; }
+      .scope-link { font-size: 11px; min-height: 0; padding: 8px; }
+      .scope-icon { width: 30px; height: 30px; flex-basis: 30px; }
+      .scope-list { gap: 6px; margin-block: 10px; }
+      .scope-list li { font-size: 11px; padding: 6px 9px; }
+      .scope-kicker { font-size: 10px; }
       .workspace { grid-template-columns: 42% minmax(0, 1fr); gap: 18px; }
       .input-panel, .total-card { padding: 18px; }
       .field-label { margin-top: 16px; font-size: 12px; }
@@ -525,15 +542,27 @@
             </section>
           </div>
           <p class="total-explanation" id="total-explanation">Cada monto incluye el sueldo, los beneficios calculados por mes y el aporte a EsSalud.</p>
+          <a class="scope-link" href="#excluded-costs"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3v1"/></svg><span>Hay costos adicionales no incluidos. Ver conceptos.</span></a>
         </div>
+        <aside class="scope-note" id="excluded-costs" tabindex="-1" aria-labelledby="scope-heading">
+          <div class="scope-heading-wrap">
+            <span class="scope-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3v1"/></svg></span>
+            <div><p class="scope-kicker">Costos adicionales</p><h3 id="scope-heading">Estos conceptos también generan costo y no están incluidos</h3></div>
+          </div>
+          <p class="scope-intro">Los dos montos mostrados solo suman los conceptos del desglose. <strong>No incluyen:</strong></p>
+          <ul class="scope-list">
+            <li>Utilidades</li>
+            <li>Comisiones</li>
+            <li class="scope-wide">Horas extras, incluidas las realizadas en domingos o feriados</li>
+            <li>Movilidad</li>
+            <li>Alimentación</li>
+          </ul>
+          <p class="scope-consequence">Cuando correspondan, estos pagos se suman y aumentan el costo para la empresa.</p>
+        </aside>
         <div class="pay-note">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg>
           <div><strong>Revisa el pago final en tu boleta.</strong><p>El pago que recibes depende de los descuentos de tu boleta. Esta calculadora no aplica esos descuentos.</p></div>
         </div>
-        <aside class="scope-note" aria-labelledby="scope-heading">
-          <h3 id="scope-heading">Conceptos no incluidos</h3>
-          <p>Este cálculo no incluye utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación.</p>
-        </aside>
         <p id="calculation-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
       </section>
     </div>
@@ -572,7 +601,7 @@
 
           <tr><th scope="row"><span class="concept"><span class="swatch essalud" aria-hidden="true"></span><span>EsSalud: seguro de salud<span class="concept-note">Lo paga la empresa. Este aporte no se descuenta de tu sueldo.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="essalud">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withFamily">—</span></td></tr>
         </tbody>
-        <tfoot><tr><th scope="row">Costo estimado para la empresa</th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="total">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withFamily">—</span></td></tr></tfoot>
+        <tfoot><tr><th scope="row">Total de los conceptos incluidos</th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="total">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withFamily">—</span></td></tr></tfoot>
       </table>
       <p class="rounding-note">Porcentajes e importes mostrados con dos decimales. El cálculo conserva la precisión completa; por redondeo, la suma de las filas puede variar en algunos céntimos respecto al total.</p>
     </section>
@@ -597,8 +626,8 @@
         <h3>Cómo interpretar el resultado</h3>
         <p>El total suma B y los cinco conceptos de la tabla. El indicador adicional se calcula como <strong>(total − sueldo bruto) / sueldo bruto × 100</strong>. Por eso el porcentaje adicional es mayor en el escenario con asignación familiar, aunque los beneficios y el aporte representen aproximadamente el 45.22% de la base de cada escenario.</p>
         <p>En CTS, B / 6 corresponde a la sexta parte de una gratificación semestral sin bonificación. La provisión de vacaciones es presupuestal; el resultado no equivale al desembolso efectivo de cada mes. El cálculo incluye exclusivamente los conceptos de esta tabla.</p>
-        <h3>Conceptos no incluidos en ambos escenarios</h3>
-        <p>Este cálculo no incluye utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación.</p>
+        <h3>Costos adicionales no incluidos en los resultados</h3>
+        <p>Los resultados suman exclusivamente los conceptos del desglose. No incluyen utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación. <strong>Estos conceptos también generan costo para la empresa cuando corresponden y deben añadirse al presupuesto.</strong></p>
         <p><strong>Seguros pendientes de configuración:</strong> SCTR y Vida Ley requieren las tasas y condiciones verificadas de las pólizas de Halema. Esta versión no les asigna un porcentaje ni los incorpora al total.</p>
         <h3>Referencias del cálculo · parámetros revisados el 31 de octubre de 2026</h3>
         <ul class="sources">
