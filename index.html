@@ -149,6 +149,7 @@
     .swatch.cts { background: #6482AA; }
     .swatch.vacations { background: #327F85; }
     .swatch.essalud { background: #74879D; }
+    .swatch.life-insurance { background: #7661A0; }
     .concept-note { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; font-size: 14px; line-height: 1.5; }
     tfoot th, tfoot td { padding: 18px 25px; background: #EDF2F8; color: var(--navy); font-size: 17px; font-weight: 750; }
     .method { margin-top: 24px; }
@@ -541,7 +542,7 @@
               </div>
             </section>
           </div>
-          <p class="total-explanation" id="total-explanation">Cada monto incluye el sueldo, los beneficios calculados por mes y el aporte a EsSalud.</p>
+          <p class="total-explanation" id="total-explanation">Cada monto incluye el sueldo, los beneficios calculados por mes, EsSalud y el Seguro Vida Ley.</p>
           <a class="scope-link" href="#excluded-costs"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3v1"/></svg><span>Hay costos adicionales no incluidos. Ver conceptos.</span></a>
         </div>
         <aside class="scope-note" id="excluded-costs" tabindex="-1" aria-labelledby="scope-heading">
@@ -551,6 +552,7 @@
           </div>
           <p class="scope-intro">Los dos montos mostrados solo suman los conceptos del desglose. <strong>No incluyen:</strong></p>
           <ul class="scope-list">
+            <li class="scope-wide">Seguro Complementario de Trabajo de Riesgo (SCTR: Salud y Pensión)</li>
             <li>Utilidades</li>
             <li>Comisiones</li>
             <li class="scope-wide">Horas extras, incluidas las realizadas en domingos o feriados</li>
@@ -600,6 +602,9 @@
           <tr><th scope="row"><span class="concept"><span class="swatch vacations" aria-hidden="true"></span><span>Vacaciones: descanso pagado<span class="concept-note">Parte mensual del descanso pagado. No es un bono adicional.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="vacations">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="vacations" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="vacations" data-scenario="withFamily">—</span></td></tr>
 
           <tr><th scope="row"><span class="concept"><span class="swatch essalud" aria-hidden="true"></span><span>EsSalud: seguro de salud<span class="concept-note">Lo paga la empresa. Este aporte no se descuenta de tu sueldo.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="essalud">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="essalud" data-scenario="withFamily">—</span></td></tr>
+
+          <tr><th scope="row"><span class="concept"><span class="swatch life-insurance" aria-hidden="true"></span><span>Seguro Vida Ley<span class="concept-note">Costo mensual del seguro incluido en esta estimación.</span></span></span></th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="lifeInsurance">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="lifeInsurance" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="lifeInsurance" data-scenario="withFamily">—</span></td></tr>
+
         </tbody>
         <tfoot><tr><th scope="row">Total de los conceptos incluidos</th><td class="rate-cell"><span class="mobile-cell-label" aria-hidden="true">Porcentaje de la base:</span><span class="rate-value" data-rate="total">—</span></td><td class="amount-cell"><span class="mobile-cell-label" aria-hidden="true">Sin asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withoutFamily">—</span></td><td class="amount-cell with-family"><span class="mobile-cell-label" aria-hidden="true">Con asignación familiar</span><span class="cell-amount" data-result="total" data-scenario="withFamily">—</span></td></tr></tfoot>
       </table>
@@ -614,9 +619,12 @@
           <div class="formula"><strong>CTS</strong><code>(B + B / 6) / 12</code></div>
           <div class="formula"><strong>Vacaciones</strong><code>B / 12</code></div>
           <div class="formula"><strong>EsSalud</strong><code>B × 0.09</code></div>
+          <div class="formula"><strong>Vida Ley</strong><code>B × 0.005</code></div>
         </div>
         <h3>Cómo leer la columna de porcentajes</h3>
-        <p>Se muestra el porcentaje mensual de cada concepto sobre B. La tasa es igual en ambos escenarios; cambia la base sobre la que se aplica. Gratificaciones: 16.67%; bonificación extraordinaria: 1.50%; CTS: 9.72%; vacaciones: 8.33%; EsSalud: 9.00%. Son porcentajes de referencia redondeados; se calcula con las fórmulas completas.</p>
+        <p>Se muestra el porcentaje mensual de cada concepto sobre B. La tasa es igual en ambos escenarios; cambia la base sobre la que se aplica. Gratificaciones: 16.67%; bonificación extraordinaria: 1.50%; CTS: 9.72%; vacaciones: 8.33%; EsSalud: 9.00%; Vida Ley: <span data-rate="lifeInsurance">0.50%</span>. Son porcentajes de referencia redondeados; se calcula con las fórmulas completas.</p>
+        <h3>Seguro Vida Ley incluido en esta estimación</h3>
+        <p>El Seguro Vida Ley se suma al costo mensual con la tasa de <strong data-rate="lifeInsurance">0.50%</strong> proporcionada por el usuario. Para este modelo se aplica sobre el sueldo básico, más la asignación familiar en la columna correspondiente.</p>
         <p class="method-intro">RMV configurada: <strong data-reference="rmv">S/ 1,230.00</strong>. La asignación familiar es el 10% de la RMV. El modelo conserva todos los decimales al sumar; por ello la suma de los importes mostrados puede variar en algunos céntimos respecto al total.</p>
         <h3>Referencias para presupuesto</h3>
         <div class="technical-metrics grid"><div class="technical-metric"><div><strong>Costo diario para la empresa</strong><p>Costo mensual dividido entre 30. Referencia para presupuesto; no equivale al sueldo por día trabajado.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="dailyCost" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="dailyCost" data-scenario="withFamily">—</output></div></div></div><div class="technical-metric"><div><strong>Costo adicional al sueldo básico</strong><p>Cada total menos el sueldo básico ingresado. El escenario con asignación incorpora también ese beneficio.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="additional" data-scenario="withoutFamily">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="additional" data-scenario="withFamily">—</output></div></div></div><div class="technical-metric"><div><strong>Factor sobre el sueldo básico</strong><p>Costo mensual de cada escenario dividido entre el sueldo básico ingresado.</p></div><div class="benefit-values"><div class="benefit-value"><span class="scenario-mini-label">Sin asignación familiar</span><output aria-live="off" for="salary" class="" data-result="salaryFactor" data-scenario="withoutFamily" data-format="factor">—</output></div><div class="benefit-value"><span class="scenario-mini-label">Con asignación familiar</span><output aria-live="off" for="salary" class="" data-result="salaryFactor" data-scenario="withFamily" data-format="factor">—</output></div></div></div></div>
@@ -624,14 +632,14 @@
         <p><strong>Gratificación por semestre:</strong> B × 1.09. <strong>CTS por semestre:</strong> (B + B / 6) / 2. <strong>Costo diario referencial:</strong> total mensual / 30. El divisor de 30 días es una referencia presupuestal; no representa días efectivamente trabajados.</p>
         <p><strong>Bonificación extraordinaria desglosada:</strong> (B × 2 × 0.09) / 12, equivalente al 1.50% de B cada mes. Se muestra en una fila propia y se suma una sola vez. Gratificaciones y bonificación suman, juntas, aproximadamente el 18.17% de B.</p>
         <h3>Cómo interpretar el resultado</h3>
-        <p>El total suma B y los cinco conceptos de la tabla. El indicador adicional se calcula como <strong>(total − sueldo bruto) / sueldo bruto × 100</strong>. Por eso el porcentaje adicional es mayor en el escenario con asignación familiar, aunque los beneficios y el aporte representen aproximadamente el 45.22% de la base de cada escenario.</p>
+        <p>El total suma B, las provisiones de beneficios, el aporte a EsSalud y el Seguro Vida Ley. El indicador adicional se calcula como <strong>(total − sueldo bruto) / sueldo bruto × 100</strong>. Por eso el porcentaje adicional es mayor en el escenario con asignación familiar, aunque los beneficios, el aporte y Vida Ley representen aproximadamente el <strong data-rate="monthlyExtras">45.72%</strong> de la base de cada escenario.</p>
         <p>En CTS, B / 6 corresponde a la sexta parte de una gratificación semestral sin bonificación. La provisión de vacaciones es presupuestal; el resultado no equivale al desembolso efectivo de cada mes. El cálculo incluye exclusivamente los conceptos de esta tabla.</p>
         <h3>Costos adicionales no incluidos en los resultados</h3>
-        <p>Los resultados suman exclusivamente los conceptos del desglose. No incluyen utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación. <strong>Estos conceptos también generan costo para la empresa cuando corresponden y deben añadirse al presupuesto.</strong></p>
-        <p><strong>Seguros pendientes de configuración:</strong> SCTR y Vida Ley requieren las tasas y condiciones verificadas de las pólizas de Halema. Esta versión no les asigna un porcentaje ni los incorpora al total.</p>
-        <h3>Referencias del cálculo · parámetros revisados el 31 de octubre de 2026</h3>
+        <p>Los resultados suman exclusivamente los conceptos del desglose. No incluyen el Seguro Complementario de Trabajo de Riesgo (SCTR: Salud y Pensión), utilidades, comisiones, horas extras (incluidas las realizadas en domingos o feriados), movilidad ni alimentación. <strong>Estos conceptos también generan costo para la empresa cuando corresponden y deben añadirse al presupuesto.</strong></p>
+        <h3>Referencias del cálculo</h3>
         <ul class="sources">
           <li><strong>Reglas de negocio:</strong> fórmulas y alcance proporcionados para esta herramienta.</li>
+          <li><strong>Parámetros indicados por el usuario el 5 de noviembre de 2026:</strong> Seguro Vida Ley al 0.5% de la base de cada escenario. El Seguro Complementario de Trabajo de Riesgo (SCTR: Salud y Pensión) se presenta entre los conceptos no incluidos, según la actualización solicitada.</li>
           <li><strong>Fuentes adjuntas:</strong> D.S. 005-2002-TR, art. 3.3 (gratificaciones); TUO de la Ley de CTS, arts. 18 y 21; D. Leg. 713, arts. 10 y 15; Reglamento de descansos remunerados, art. 19; RIT Halema 2025, arts. 53–56.</li>
           <li><strong>[Información externa / No encontrada en fuentes internas]</strong> RMV de S/ 1,230.00 desde el 01/10/2026: <a href="https://busquedas.elperuano.pe/dispositivo/EX/2559163-1" target="_blank" rel="noopener noreferrer">D.S. 015-2026-TR, art. 1.2 · El Peruano</a>. Asignación familiar de S/ 123.00: <a href="https://www.elperuano.pe/noticia/305879-desde-hoy-rige-la-nueva-rmv-sueldo-minimo-sube-a-s-1230-y-cambia-otros-conceptos-laborales" target="_blank" rel="noopener noreferrer">El Peruano, 01/10/2026</a>.</li>
         </ul>
@@ -660,6 +668,8 @@
       rmv: 1230,
       familyAllowanceRate: 0.10,
       essaludRate: 0.09,
+      // Tasa proporcionada por el usuario el 05/11/2026; SCTR excluido.
+      lifeInsuranceRate: 0.005,
       extraordinaryBonusRate: 0.09,
       annualGratifications: 2,
       monthsInYear: 12,
@@ -721,7 +731,9 @@
       const cts = (base + base / CONFIG.monthsInSemester) / CONFIG.monthsInYear;
       const vacations = base / CONFIG.monthsInYear;
       const essalud = base * CONFIG.essaludRate;
-      const total = base + gratification + cts + vacations + essalud;
+      const lifeInsurance = base * CONFIG.lifeInsuranceRate;
+      // Sumar Vida Ley una sola vez; el SCTR no forma parte de este total.
+      const total = base + gratification + cts + vacations + essalud + lifeInsurance;
       const additional = total - salary;
 
       // Los siguientes importes son equivalencias informativas, no cargos
@@ -734,6 +746,7 @@
       return {
         salary, familyAllowance, base, gratification, cts, vacations, essalud,
         gratificationPrincipal, extraordinaryBonus,
+        lifeInsurance,
         semesterGratification, semesterCTS, dailyCost,
         total, additional, monthlyExtras: total - base,
         additionalPercent: (additional / salary) * 100,
