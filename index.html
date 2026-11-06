@@ -498,10 +498,10 @@
           <p class="section-description">Ten a la mano tu boleta de pago.</p>
           <form id="calculator-form" novalidate>
             <label class="field-label" for="salary">Sueldo básico mensual</label>
-            <div class="money-input"><span class="money-prefix" aria-hidden="true">S/</span><input id="salary" name="salary" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ejemplo: 2000" required autocomplete="off" aria-describedby="salary-help input-error" aria-invalid="false"></div>
+            <div class="money-input"><span class="money-prefix" aria-hidden="true">S/</span><input id="salary" name="salary" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ejemplo: 1300" required autocomplete="off" aria-describedby="salary-help input-error" aria-invalid="false"></div>
             <p id="salary-help" class="help-text">Busca el <strong>sueldo básico del mes, antes de los descuentos</strong>. No sumes aquí la asignación familiar.</p>
             <p id="input-error" class="error" hidden></p>
-            <button class="example-button" id="example-button" type="button">Usar ejemplo de S/ 2,000</button>
+            <button class="example-button" id="example-button" type="button">Usar ejemplo de S/ 1,300</button>
             <div class="family-info">
               <strong>Un sueldo, dos escenarios</strong>
               <p>Comparamos el sueldo sin asignación familiar y con <strong data-reference="familyAllowance">S/ 123.00</strong> de asignación al mes.</p>
@@ -764,10 +764,10 @@
       const raw = ui.salary.value.trim();
       const salary = ui.salary.valueAsNumber;
       if (raw === "" || !Number.isFinite(salary)) {
-        return "Escribe tu sueldo. Por ejemplo: 2000.";
+        return "Escribe tu sueldo. Por ejemplo: 1300.";
       }
       if (salary <= 0) return "El sueldo debe ser mayor que cero.";
-      if (ui.salary.validity.stepMismatch) return "Usa hasta dos decimales. Por ejemplo: 2000.50.";
+      if (ui.salary.validity.stepMismatch) return "Usa hasta dos decimales. Por ejemplo: 1300.50.";
       // Límite técnico de precisión monetaria de JavaScript, no salarial.
       if (!Number.isSafeInteger(Math.round(salary * 100)) ||
           !Number.isSafeInteger(Math.round((salary + CONFIG.rmv) * 150))) {
@@ -870,7 +870,7 @@
       updateCalculator();
     });
     ui.example.addEventListener("click", () => {
-      ui.salary.value = "2000.00";
+      ui.salary.value = "1300.00";
       showingExample = true;
       updateCalculator(true, true);
     });
